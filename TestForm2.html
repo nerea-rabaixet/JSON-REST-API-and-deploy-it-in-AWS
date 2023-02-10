@@ -1,0 +1,109 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+	<HEAD><TITLE>Lab1</TITLE></HEAD>
+	<BODY BGCOLOR="#FDF5E6">
+		<img src="./bicing.jpeg" width=100% height=75% >
+ 		<H1 ALIGN="CENTER">Telematics Applications Lab 1</H1>
+ 		Click <A HREF="http://ec2-54-165-115-8.compute-1.amazonaws.com:8080/at-seminar-4-0.0.1-SNAPSHOT/at/bicing/getUsers">here</A>
+ 		if you want to see all clients
+		<br><br>
+		Click <A HREF="http://ec2-54-165-115-8.compute-1.amazonaws.com:8080/at-seminar-4-0.0.1-SNAPSHOT/at/bicing/getStations">here</A>
+ 		if you want to see all stations
+		<br><br>
+		Click <A HREF="http://ec2-54-165-115-8.compute-1.amazonaws.com:8080/at-seminar-4-0.0.1-SNAPSHOT/at/bicing/getCovidInfo">here</A>
+ 		if you want to see covid info
+		<br><br>
+User:<br><br>		
+		<form>
+  			<label for="phone">Phone number:</label><br>
+  			<input type="text" id="phone" name="phone"><br>
+  			<label for="chatId">Chat id:</label><br>
+  			<input type="text" id="chatId" name="chatId"><br>
+			<label for="sub_stat">Subscribe to  stations:</label><br>
+  			<input type="text" id="sub_stat" name="sub_stat"><br><br>
+			<button type="button" onclick="load()">Make request</button>
+		</form>
+		<div id="sectionId">
+		</div>
+		<script> 
+			function load() {
+				var xmlhttp = new XMLHttpRequest();
+				xmlhttp.onreadystatechange =
+				function() {
+					if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+					document.getElementById("sectionId").innerHTML = xmlhttp.responseText;
+					}
+				};
+				var params = {
+					"phone": document.getElementById("phone").value,
+					"chatID": document.getElementById("chatId").value,
+					"substribed_Stations": document.getElementById("sub_stat").value.replace(/\s/g,"").split(",")
+				};
+				xmlhttp.open("POST","at/bicing/subscribe", true);
+				xmlhttp.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
+				xmlhttp.send(JSON.stringify(params));
+			}	
+		</script>
+My stations:<br><br>
+		
+		<form>
+			<label for="phone">Phone number:</label><br>
+			<input type="text" id="phone1" name="phone"><br>
+			<label for="chatId">Chat id:</label><br>
+			<input type="text" id="chatId1" name="chatId"><br>
+			<label for="sub_stat">Subscribe to  stations:</label><br>
+			<input type="text" id="sub_stat1" name="sub_stat"><br><br>
+			<button type="button" onclick="load2()">Make request</button>
+		</form>
+		<div id="sectionId1">
+		</div>
+		<script> 
+			function load2() {
+				var xmlhttp = new XMLHttpRequest();
+				xmlhttp.onreadystatechange =
+				function() {
+					if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+					document.getElementById("sectionId1").innerHTML = xmlhttp.responseText;
+					}
+				};
+				var params = {
+						"phone": document.getElementById("phone1").value,
+						"chatID": document.getElementById("chatId1").value,
+						"substribed_Stations": document.getElementById("sub_stat1").value.replace(/\s/g,"").split(",")
+				};
+				xmlhttp.open("POST","at/bicing/getMyStations", true);
+				xmlhttp.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
+				xmlhttp.send(JSON.stringify(params));
+			}	
+		</script>
+Covid:<br><br>
+		
+		<form>
+  			<label for="phone">Phone number:</label><br>
+  			<input type="text" id="phone" name="phone"><br>
+  			<label for="region">Region:</label><br>
+  			<input type="text" id="region" name="region"><br>
+			<button type="button" onclick="load1()">Make request</button>
+		</form>
+		<div id="sectionId2">
+		</div>
+		<script> 
+			function load1() {
+				var xmlhttp = new XMLHttpRequest();
+				xmlhttp.onreadystatechange =
+				function() {
+					if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+					document.getElementById("sectionId2").innerHTML = xmlhttp.responseText;
+					}
+				};
+				var params = {
+					"phone": document.getElementById("phone").value,
+					"nom": document.getElementById("region").value,
+				};
+				xmlhttp.open("POST","at/bicing/getMyCovid", true);
+				xmlhttp.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
+				xmlhttp.send(JSON.stringify(params));
+			}	
+		</script>
+ 	</BODY>
+</HTML>
